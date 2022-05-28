@@ -9,3 +9,6 @@
 - All work will be subfolders inside public_html (for the most part), lib will contain reusable functionality, partials will contain reusable templates, nothing else should change.
 
 
+1.IT202, 451
+2.Jordan
+3.I run track at NJIT
