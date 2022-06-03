@@ -9,7 +9,7 @@ function processArray($arr) {
     echo "<br>Odds output:<br>";
     for ($i = 0; $i < count($arr); $i++){
         if ($arr[$i]%2 == 1){
-            echo $arr[$i];
+            echo $arr[$i] . " ";
         }
     }
 
