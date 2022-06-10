@@ -29,15 +29,18 @@
         }
         nav a:hover{
             color: purple;
-            display: block;
+            display: inline;
         }
         h3 ul li:before {
-            content:"\2713\0020"; 
+            content:'&#10003'; 
         }
         h1::first-letter{
             text-transform: capitalize;
         }
         nav a:first-letter{
+            text-transform: capitalize;
+        }
+        nav a:not(:hover){
             text-transform: capitalize;
         }
         /* TODO: make edits here */
