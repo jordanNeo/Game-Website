@@ -7,18 +7,39 @@
     <script>
         window.addEventListener("load", () => {
             console.log("loaded via javascript");
-            //TODO: add any extra onload processing you may need here
+            //TODO: add any extra onload processigit sng you may need here
         });
         function getCurrentSelection() {
             setTimeout(() => {
                 //added this delay here as some solutions may require it to update properly (i.e., click code may complete before the navigation changes)
                 //TODO: add code for processing the current selection 
-
+                var pageN = this.attr('href');
+                document.querySelector('h1').innerHTML = pageN;
+                document.querySelector('title').innerHTML = pageN;
+                updateCurrentPage(pageN);
                 //Note: likely you'll want to call updateCurrentPage towards the end
             }, 100);
         }
     </script>
     <style>
+        nav ul {
+            display: inline;
+            list-style-type: none;
+            background-color: black;
+        }
+        nav a:hover{
+            color: purple;
+            display: block;
+        }
+        h3 ul li:before {
+            content:"\2713\0020"; 
+        }
+        h1::first-letter{
+            text-transform: capitalize;
+        }
+        nav a:first-letter{
+            text-transform: capitalize;
+        }
         /* TODO: make edits here */
     </style>
     <!-- make the necessary edits above this line -->
