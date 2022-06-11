@@ -20,7 +20,7 @@
                 //added this delay here as some solutions may require it to update properly (i.e., click code may complete before the navigation changes)
                 //TODO: add code for processing the current selection 
                 currHash = window.location.hash;
-                link = document.querySelector(`a[href="${currentHash}"]`);
+                link = document.querySelector(`a[href="${currHash}"]`);
                 
                 name = link.innerText;
                 updateCurrentPage(name); 
