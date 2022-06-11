@@ -12,17 +12,14 @@
             //TODO: add any extra onload processigit sng you may need here
             var navs = document.getElementsByTagName("a");
             
-            
-        });
-        for (i = 0; i<navs.length; i++){
-                navs[i].addEventListener("click", getCurrentSelection());
-            }
-        var navs = document.getElementsByTagName("a");
-            var currentHash;
-            var link;
             for (i = 0; i<navs.length; i++){
                 navs[i].addEventListener("click", getCurrentSelection());
             }
+        });
+        var navs = document.getElementsByTagName("a");
+            var currentHash;
+            var link;
+        
         function getCurrentSelection() {
             setTimeout(() => {
                 //added this delay here as some solutions may require it to update properly (i.e., click code may complete before the navigation changes)
