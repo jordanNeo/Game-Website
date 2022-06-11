@@ -8,20 +8,22 @@
         window.addEventListener("load", () => {
             console.log("loaded via javascript");
             //TODO: add any extra onload processigit sng you may need here
-            var navs = document.getElementsByTagName("a");
+            
+        });
+        var navs = document.getElementsByTagName("a");
             var currentHash;
             var link;
             for (i = 0; i<navs.length; i++){
                 navs[i].addEventListener("click", getCurrentSelection());
             }
-        });
         function getCurrentSelection() {
             setTimeout(() => {
                 //added this delay here as some solutions may require it to update properly (i.e., click code may complete before the navigation changes)
                 //TODO: add code for processing the current selection 
                 currHash = window.location.hash;
-                link = document.querySelector(`a[href="${currHash}"]`);
-                
+                console.log(currHash,'works?');
+                link = document.querySelector(`a[href="${currHash}"]`);  
+                console.log(link, 'works?');  
                 name = link.innerText;
                 updateCurrentPage(name); 
                 //Note: likely you'll want to call updateCurrentPage towards the end
