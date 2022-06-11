@@ -7,8 +7,13 @@
     <script>
         window.addEventListener("load", () => {
             console.log("loaded via javascript");
-            document.querySelector('h1').innerHTML = "are you even working";
             //TODO: add any extra onload processigit sng you may need here
+        });
+        window.addEventListener("hashchange", function () {
+          const currHash = window.location.hash;
+          const link = document.querySelector(`a[href="${currentHash}"]`);
+          document.querySelector("h1").innerText = link.innerText;
+          document.title = link.innerText;
         });
         function getCurrentSelection() {
             setTimeout(() => {
