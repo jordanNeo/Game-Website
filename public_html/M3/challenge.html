@@ -8,18 +8,21 @@
         window.addEventListener("load", () => {
             console.log("loaded via javascript");
             //TODO: add any extra onload processigit sng you may need here
-        });
-        window.addEventListener("hashchange", function () {
-          const currHash = window.location.hash;
-          const link = document.querySelector(`a[href="${currentHash}"]`);
-          document.querySelector("h1").innerText = link.innerText;
-          document.title = link.innerText;
+            var navs = document.getElementsByTagName("a");
+            var currentHash;
+            var link;
+            for (i = 0; i<navs.length; i++){
+                navs[i].addEventListener("click", getCurrentSelection());
+            }
         });
         function getCurrentSelection() {
             setTimeout(() => {
                 //added this delay here as some solutions may require it to update properly (i.e., click code may complete before the navigation changes)
                 //TODO: add code for processing the current selection 
-                
+                currHash = window.location.hash;
+                link = document.querySelector(`a[href="${currentHash}"]`);
+                document.querySelector("h1").innerText = link.innerText;
+                document.title = link.innerText;
                 //Note: likely you'll want to call updateCurrentPage towards the end
             }, 100);
         }
