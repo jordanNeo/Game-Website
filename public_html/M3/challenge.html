@@ -15,7 +15,7 @@
             for (i = 0; i<navs.length; i++){
                 navs[i].addEventListener("click", getCurrentSelection());
             }
-            location.reload();
+            window.location.href = window.location.href;
         });
         var navs = document.getElementsByTagName("a");
             var currentHash;
