@@ -14,16 +14,12 @@
             
             for (i = 0; i<navs.length; i++){
                 navs[i].addEventListener("click", getCurrentSelection());
-                navs[i].addEventListener("click", reloadPls);
             }
         });
         
         var navs = document.getElementsByTagName("a");
         var currentHash;
-        var link;
-        function reloadPls(){
-            window.reload();
-        }    
+        var link;  
         
         function getCurrentSelection() {
             setTimeout(() => {
@@ -32,7 +28,8 @@
                 currHash = window.location.hash;
                 link = document.querySelector(`a[href="${currHash}"]`);  
                 name = link.innerText;
-                updateCurrentPage(name); 
+                updateCurrentPage(name);
+                if (h1.innerText == name){location.reload();}
                 //Note: likely you'll want to call updateCurrentPage towards the end
             }, 100);
         }
