@@ -29,7 +29,6 @@
                 link = document.querySelector(`a[href="${currHash}"]`);  
                 name = link.innerText;
                 updateCurrentPage(name);
-                if (h1.innerText == name){location.reload();}
                 //Note: likely you'll want to call updateCurrentPage towards the end
             }, 100);
         }
