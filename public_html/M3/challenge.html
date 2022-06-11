@@ -5,12 +5,13 @@
     <title>Problem 1</title>
     <meta charset="utf-8" />
     <script>
+        var currentHash;
+        var link;
         window.addEventListener("load", () => {
             console.log("loaded via javascript");
             //TODO: add any extra onload processigit sng you may need here
             var navs = document.getElementsByTagName("a");
-            var currentHash;
-            var link;
+            
             for (i = 0; i<navs.length; i++){
                 navs[i].addEventListener("click", getCurrentSelection());
             }
@@ -31,7 +32,6 @@
                 console.log(link, 'works?');  
                 name = link.innerText;
                 updateCurrentPage(name); 
-                location.reload();
                 //Note: likely you'll want to call updateCurrentPage towards the end
             }, 100);
         }
