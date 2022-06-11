@@ -15,11 +15,15 @@
             for (i = 0; i<navs.length; i++){
                 navs[i].addEventListener("click", getCurrentSelection());
             }
-            window.location.href = window.location.href;
+            document.getElementsByTagName('a').addEventListener("click", reloadPls)
         });
+        
         var navs = document.getElementsByTagName("a");
-            var currentHash;
-            var link;
+        var currentHash;
+        var link;
+        function reloadPls(){
+            window.reload();
+        }    
         
         function getCurrentSelection() {
             setTimeout(() => {
