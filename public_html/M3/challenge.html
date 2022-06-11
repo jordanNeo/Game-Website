@@ -31,6 +31,7 @@
                 console.log(link, 'works?');  
                 name = link.innerText;
                 updateCurrentPage(name); 
+                location.reload();
                 //Note: likely you'll want to call updateCurrentPage towards the end
             }, 100);
         }
