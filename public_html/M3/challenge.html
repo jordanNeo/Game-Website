@@ -21,8 +21,9 @@
                 //TODO: add code for processing the current selection 
                 currHash = window.location.hash;
                 link = document.querySelector(`a[href="${currentHash}"]`);
-                document.querySelector("h1").innerText = link.innerText;
-                document.title = link.innerText;
+                
+                name = link.innerText;
+                updateCurrentPage(name); 
                 //Note: likely you'll want to call updateCurrentPage towards the end
             }, 100);
         }
