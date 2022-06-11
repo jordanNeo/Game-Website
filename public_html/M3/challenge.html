@@ -8,7 +8,12 @@
         window.addEventListener("load", () => {
             console.log("loaded via javascript");
             //TODO: add any extra onload processigit sng you may need here
-            
+            var navs = document.getElementsByTagName("a");
+            var currentHash;
+            var link;
+            for (i = 0; i<navs.length; i++){
+                navs[i].addEventListener("click", getCurrentSelection());
+            }
         });
         var navs = document.getElementsByTagName("a");
             var currentHash;
