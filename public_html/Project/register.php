@@ -58,7 +58,18 @@ require_once(__DIR__ . "/../../lib/functions.php");
     echo "Passwords must match <br>";
     $hasError = true;
  }
- if(!$hasError){
-    echo "Welcome, $email";
+ if(!$hasError) {// echo "Welcome, $email";
+
+ $hash = password_hash($password, PASSWORD_BCRYPT);
+ $db = getDB();
+ $stmt = $db->prepare("INSERT INTO Users (email, password) VALUES(:email, :password)");
+ try {
+    $stmt->execute([":email" => $email, ":password" => $hash]);
+    echo "Succesfully Registered!";
  }
+ catch(Exception $e){
+    echo "There was a problem registering";
+    "<pre>" . var_export($e, true) . "</pre>";
+ }
+}
 ?>
