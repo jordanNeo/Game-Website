@@ -26,7 +26,7 @@ require_once(__DIR__ . "/../../lib/functions.php");
 </script>
 <?php
  //TODO 2: add PHP Code
- if(isset($POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm"])){
+ if(isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm"])){
     $email = se($_POST,"email","", false);          //$_POST["email"];
     $password = se($_POST,"password","", false);
     $confirm = se($_POST,"confirm","", false);
