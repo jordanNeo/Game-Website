@@ -30,15 +30,15 @@ require_once(__DIR__ . "/../../lib/functions.php");
     $email = se($_POST,"email","", false);          //$_POST["email"];
     $password = se($_POST,"password","", false);
     $confirm = se($_POST,"confirm","", false);
- }
- $hasError = false;
+ 
+    $hasError = false;
  if(empty($email)){
     echo "Email must not be empty <br>";
     $hasError = true;
  }
  $email = filter_var($email, FILTER_SANITIZE_EMAIL);
  if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-    echo "Invalid email address";
+    echo "Invalid email address <br>";
     $hasError = true;
  }
 
@@ -50,7 +50,7 @@ require_once(__DIR__ . "/../../lib/functions.php");
     echo "Confirm password must not be empty <br>";
     $hasError = true;
  }
- if($strlen($password) < 8){
+ if(strlen($password) < 8){
     echo "Password too short <br>";
     $hasError = true;
  }
@@ -71,5 +71,6 @@ require_once(__DIR__ . "/../../lib/functions.php");
     echo "There was a problem registering";
     "<pre>" . var_export($e, true) . "</pre>";
  }
+}
 }
 ?>
