@@ -14,7 +14,6 @@ require(__DIR__ . "/../../partials/nav.php");
 </form>
 <script>
     function validate(form) {
-        function validate(form) {
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
 
@@ -33,7 +32,7 @@ require(__DIR__ . "/../../partials/nav.php");
         }
         return isValid;
     }
-    }
+
 </script>
 <?php
 //TODO 2: add PHP Code
