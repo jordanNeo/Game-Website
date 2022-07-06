@@ -125,10 +125,13 @@ $username = get_username();
         let con = form.confirmPassword.value;
         let isValid = true;
         //TODO add other client side validation....
-
+        if (!isValidPassword(password)) {
+            flash("Password too short", "danger");
+            isValid = false;
+        }
         //example of using flash via javascript
         //find the flash container, create a new element, appendChild
-        if (pw !== con) {
+        if (!isEqual(pw,con)) {
             flash("Password and Confrim password must match", "warning");
             isValid = false;
         }
