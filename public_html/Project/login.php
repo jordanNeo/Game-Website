@@ -17,8 +17,22 @@ require(__DIR__ . "/../../partials/nav.php");
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
 
-        return true;
+        let isValid = true;
+        const email = form.email.value;
+        const password = form.password.value;
+        if (email.indexOf("@") > -1) {
+            if (!isValidEmail(email)) {
+                flash("Invalid email", "danger");
+                isValid = false;
+            }
+        } 
+        if (!isValidPassword(password)) {
+            flash("Password is too short", "danger");
+            isValid = false;
+        }
+        return isValid;
     }
+
 </script>
 <?php
 //TODO 2: add PHP Code
