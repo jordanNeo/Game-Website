@@ -27,7 +27,7 @@ require(__DIR__ . "/../../partials/nav.php");
             }
         } 
         if (!isValidPassword(password)) {
-            flash("Password too short", "danger");
+            flash("Password is too short", "danger");
             isValid = false;
         }
         return isValid;
