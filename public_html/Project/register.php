@@ -37,11 +37,11 @@ reset_session();
                 isValid = false;
             }
         }
-        
-            if (!isValidUsername(username)) {
-                flash("Username must be lowercase, 3-16 characters, and contain only a-z, 0-9, _ or -", "danger");
-                isValid = false;
-            }
+
+        if (!isValidUsername(username)) {
+            flash("Username must be lowercase, 3-16 characters, and contain only a-z, 0-9, _ or -", "danger");
+            isValid = false;
+        }
         
         if (!isValidPassword(password)) {
             flash("Password too short", "danger");

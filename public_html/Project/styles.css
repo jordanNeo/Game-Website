@@ -3,18 +3,21 @@
 }
 
 .alert-warning {
-    background-color: yellow;
+    background-color: rgb(150, 150, 22);
 }
 
 .alert-danger {
-    background-color: red;
+    background-color: rgb(145, 14, 14);
 }
 
 .alert-info {
     background-color: darkblue;
 }
-nav li{display: inline; background-color: rgb(45, 45, 45);}
-nav li a{color: orange}
+nav li{display: inline; background-color: rgb(117, 117, 117);}
+nav li a{color: orange;
+    font-family: Impact;
+    font-size: large;
+}
 input{border-radius: 15%;}
 body{
     background-color: black;
