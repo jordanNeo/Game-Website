@@ -4,7 +4,11 @@ require(__DIR__ . "/../../partials/nav.php");
 <form onsubmit="return validate(this)" method="POST">
     <div>
         <label for="email">Email</label>
+<<<<<<< HEAD
         <input type="text" name="email" required />
+=======
+        <input type="email" name="email" required />
+>>>>>>> d5d4f5e55934c0e984b6f049317e7d8b11a472cc
     </div>
     <div>
         <label for="pw">Password</label>
@@ -26,12 +30,15 @@ require(__DIR__ . "/../../partials/nav.php");
                 isValid = false;
             }
         } 
+<<<<<<< HEAD
         else{
             if (!isValidUsername(email)) {
                 flash("Username must be lowercase, 3-16 characters, and contain only a-z, 0-9, _ or -", "danger");
                 isValid = false;
             }
         }
+=======
+>>>>>>> d5d4f5e55934c0e984b6f049317e7d8b11a472cc
         if (!isValidPassword(password)) {
             flash("Password is too short", "danger");
             isValid = false;
@@ -52,6 +59,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         flash("Email must not be empty");
         $hasError = true;
     }
+<<<<<<< HEAD
     if (str_contains($email, "@")) {
         //sanitize
         $email = sanitize_email($email);
@@ -66,6 +74,20 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         }
     }
 
+=======
+    //sanitize
+    //$email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    $email = sanitize_email($email);
+    //validate
+    /*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        flash("Invalid email address");
+        $hasError = true;
+    }*/
+    if (!is_valid_email($email)) {
+        flash("Invalid email address");
+        $hasError = true;
+    }
+>>>>>>> d5d4f5e55934c0e984b6f049317e7d8b11a472cc
     if (empty($password)) {
         flash("password must not be empty");
         $hasError = true;
@@ -79,7 +101,11 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         //TODO 4
         $db = getDB();
         $stmt = $db->prepare("SELECT id, email, username, password from Users 
+<<<<<<< HEAD
         where email = :email or username = :email");
+=======
+        where email = :email");
+>>>>>>> d5d4f5e55934c0e984b6f049317e7d8b11a472cc
         try {
             $r = $stmt->execute([":email" => $email]);
             if ($r) {
@@ -90,6 +116,7 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
                     if (password_verify($password, $hash)) {
                         //flash("Weclome $email");
                         $_SESSION["user"] = $user; //sets our session data from db
+<<<<<<< HEAD
                         try {
                             //lookup potential roles
                             $stmt = $db->prepare("SELECT Roles.name FROM Roles 
@@ -106,6 +133,8 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
                         } else {
                             $_SESSION["user"]["roles"] = []; //no roles
                         }
+=======
+>>>>>>> d5d4f5e55934c0e984b6f049317e7d8b11a472cc
                         flash("Welcome, " . get_username());
                         die(header("Location: home.php"));
                     } else {

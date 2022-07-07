@@ -28,7 +28,10 @@ reset_session();
 
         let isValid = true;
         const email = form.email.value;
+<<<<<<< HEAD
         const username = form.username.value;
+=======
+>>>>>>> d5d4f5e55934c0e984b6f049317e7d8b11a472cc
         const password = form.password.value;
         const confirm = form.confirm.value;
         if (email.indexOf("@") > -1) {
@@ -36,6 +39,7 @@ reset_session();
                 flash("Invalid email", "danger");
                 isValid = false;
             }
+<<<<<<< HEAD
         }
 
         if (!isValidUsername(username)) {
@@ -43,6 +47,14 @@ reset_session();
             isValid = false;
         }
         
+=======
+        } else {
+            if (!isValidUsername(email)) {
+                flash("Username must be lowercase, 3-16 characters, and contain only a-z, 0-9, _ or -", "danger");
+                isValid = false;
+            }
+        }
+>>>>>>> d5d4f5e55934c0e984b6f049317e7d8b11a472cc
         if (!isValidPassword(password)) {
             flash("Password too short", "danger");
             isValid = false;
