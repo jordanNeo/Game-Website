@@ -123,12 +123,36 @@ $username = get_username();
     function validate(form) {
         let pw = form.newPassword.value;
         let con = form.confirmPassword.value;
+<<<<<<< HEAD
+        let user = form.username.value;
+        let email = form.email.value;
+        let isValid = true;
+        //TODO add other client side validation....
+            if (!isValidEmail(email)) {
+                flash("Invalid email", "danger");
+                isValid = false;
+            }
+        
+        if (!isValidUsername(user)) {
+            flash("Username must be lowercase, 3-16 characters, and contain only a-z, 0-9, _ or -", "danger");
+            isValid = false;
+        }
+        if (!isValidPassword(pw)) {
+            flash("Password too short", "danger");
+            isValid = false;
+        }
+        if (!isValidPassword(con)) {
+            flash("Confirmation password too short", "danger");
+            isValid = false;
+        }
+=======
         let isValid = true;
         //TODO add other client side validation....
         if (!isValidPassword(password)) {
             flash("Password too short", "danger");
             isValid = false;
         }
+>>>>>>> d5d4f5e55934c0e984b6f049317e7d8b11a472cc
         //example of using flash via javascript
         //find the flash container, create a new element, appendChild
         if (!isEqual(pw,con)) {
