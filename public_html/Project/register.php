@@ -28,6 +28,7 @@ reset_session();
 
         let isValid = true;
         const email = form.email.value;
+        const username = form.username.value;
         const password = form.password.value;
         const confirm = form.confirm.value;
         if (email.indexOf("@") > -1) {
@@ -36,7 +37,7 @@ reset_session();
                 isValid = false;
             }
         } else {
-            if (!isValidUsername(email)) {
+            if (!isValidUsername(username)) {
                 flash("Username must be lowercase, 3-16 characters, and contain only a-z, 0-9, _ or -", "danger");
                 isValid = false;
             }
