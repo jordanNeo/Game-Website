@@ -3,7 +3,6 @@
 }
 
 .alert-warning {
-<<<<<<< HEAD
     background-color: rgb(150, 150, 22);
 }
 
@@ -23,23 +22,5 @@ input{border-radius: 15%;}
 body{
     background-color: black;
     color: orange;
-=======
-    background-color: yellow;
-}
-
-.alert-danger {
-    background-color: red;
-}
-
-.alert-info {
-    background-color: teal;
-}
-nav li{display: inline; background-color: rebeccapurple;}
-nav li a{color: hotpink}
-input{border-radius: 50%;}
-body{
-    background-color: hotpink;
-    color: rgb(153, 0, 153);
->>>>>>> d5d4f5e55934c0e984b6f049317e7d8b11a472cc
 
 }
