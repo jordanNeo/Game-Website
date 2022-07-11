@@ -175,7 +175,8 @@ function draw() {
   // Collide the ship with enemies
   enemies.forEach(function(enemy, i) {
     if (isColliding(enemy, ship)) {
-      if (lives == 0){
+      lives--;
+      if (lives < 1){
         gameOver = true;
       }
       
@@ -207,7 +208,6 @@ function draw() {
       if (isColliding(bullet, enemy)) {
         enemies.splice(i, 1);
         score++;
-        lives--;
         shooting = false;
         // Make the game harder
         if (score % 10 === 0 && timeBetweenEnemies > 1000) {
@@ -234,7 +234,7 @@ function draw() {
   context.fillText('Score: ' + score, 1, 25)
   context.font = '24px Arial';
   context.textAlign = 'left';
-  context.fillText('Lives: ' + lives, 1, 500)
+  context.fillText('Lives: ' + lives, 500, 25)
   // End or continue the game
   if (gameOver) {
     endGame();
