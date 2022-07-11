@@ -158,7 +158,7 @@ canvas.addEventListener('keydown', function(event) {
   if (event.keyCode === 83) { // DOWN
     down2 = true;
   }
-  if (event.keyCode === 81) { 
+  if (event.keyCode === 9) { 
     shoot2();
   }
 });
@@ -204,8 +204,7 @@ function draw() {
   enemies.forEach(function(enemy) {
     enemy.x -= enemy.s;
     if (enemy.x == 0) {
-      shooting=false;
-      lives-= 50;
+      lives-= 300;
       if (lives < 1){
         gameOver = true;
       }
@@ -272,8 +271,9 @@ function draw() {
       if (isColliding(bullet, enemy)) {
         enemies.splice(i, 1);
         score++;
-        lives+=5;
+        lives+=50;
         shooting = false;
+        shooting2 = false;
         // Make the game harder
         if (score % 3 === 0 && timeBetweenEnemies > 300) {
           clearInterval(timeoutId);
@@ -300,8 +300,8 @@ function draw() {
       if (isColliding(bullet2, enemy)) {
         enemies.splice(i, 1);
         score++;
-        lives+=5;
-        shooting = false;
+        lives+=50;
+        shooting2 = false;
         // Make the game harder
         if (score % 3 === 0 && timeBetweenEnemies > 300) {
           clearInterval(timeoutId);
