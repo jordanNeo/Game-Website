@@ -153,12 +153,12 @@ canvas.addEventListener('keyup', function(event) {
 canvas.addEventListener('keydown', function(event) {
   event.preventDefault();
   if (event.keyCode === 87) { // UP
-    up = true;
+    up2 = true;
   }
   if (event.keyCode === 83) { // DOWN
-    down = true;
+    down2 = true;
   }
-  if (event.keyCode === 81) { // SPACE
+  if (event.keyCode === 81) { 
     shoot2();
   }
 });
@@ -167,10 +167,10 @@ canvas.addEventListener('keydown', function(event) {
 canvas.addEventListener('keyup', function(event) {
   event.preventDefault();
   if (event.keyCode === 87) { // UP 
-    up = false;
+    up2 = false;
   }
   if (event.keyCode === 83) { // DOWN
-    down = false;
+    down2 = false;
   }
 });
 
@@ -190,7 +190,7 @@ function shoot() {
 }
 function shoot2() {
   if (!shooting2) {
-    shooting = true;
+    shooting2 = true;
     bullet2.x = ship2.x + ship2.l;
     bullet2.y = ship2.y + ship2.l / 2;
   }
