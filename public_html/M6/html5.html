@@ -13,7 +13,6 @@ var canvas = document.getElementById('canvas');
 // Get the canvas drawing context
 var context = canvas.getContext('2d');
 
-livesText = canvas.getContext('2d');
 
 // Create an object representing a square on the canvas
 function makeSquare(x, y, length, speed) {
@@ -30,7 +29,7 @@ function makeSquare(x, y, length, speed) {
 
 // The ship the user controls
 var ship = makeSquare(50, canvas.height / 2 - 25, 50, 5);
-var lives = 3;
+var lives = 1000;
 
 
 // Flags to tracked which keys are pressed
@@ -166,9 +165,9 @@ function draw() {
   // Move and draw the enemies
   enemies.forEach(function(enemy) {
     enemy.x -= enemy.s;
-    if (enemy.x < 0) {
+    if (enemy.x == 0) {
       shooting=false;
-      lives--;
+      lives-= 50;
       if (lives < 1){
         gameOver = true;
       }
@@ -179,7 +178,7 @@ function draw() {
   // Collide the ship with enemies
   enemies.forEach(function(enemy, i) {
     if (isColliding(enemy, ship)) {
-      shooting=false;
+
       lives--;
       if (lives < 1){
         gameOver = true;
@@ -239,7 +238,7 @@ function draw() {
   context.fillText('Score: ' + score, 1, 25)
   context.font = '24px Arial';
   context.textAlign = 'left';
-  context.fillText('Lives: ' + lives, 500, 25)
+  context.fillText('Health: ' + lives, 500, 25)
   // End or continue the game
   if (gameOver) {
     endGame();
