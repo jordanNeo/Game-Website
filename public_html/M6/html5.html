@@ -12,7 +12,7 @@
 var canvas = document.getElementById('canvas');
 // Get the canvas drawing context
 var context = canvas.getContext('2d');
-canvas.style.transform = "rotate(90deg)";
+
 
 
 // Create an object representing a square on the canvas
@@ -180,7 +180,7 @@ function draw() {
   enemies.forEach(function(enemy, i) {
     if (isColliding(enemy, ship)) {
 
-      lives-= 2;
+      lives-= 15;
       if (lives < 1){
         gameOver = true;
       }
@@ -213,13 +213,14 @@ function draw() {
       if (isColliding(bullet, enemy)) {
         enemies.splice(i, 1);
         score++;
+        lives+=5;
         shooting = false;
         // Make the game harder
-        if (score % 10 === 0 && timeBetweenEnemies > 1000) {
+        if (score % 3 === 0 && timeBetweenEnemies > 1000) {
           clearInterval(timeoutId);
           timeBetweenEnemies -= 1000;
           timeoutId = setInterval(makeEnemy, timeBetweenEnemies);
-        } else if (score % 5 === 0) {
+        } else if (score % 2 === 0) {
           enemyBaseSpeed += 1;
         }
       }
