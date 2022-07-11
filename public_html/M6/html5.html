@@ -29,7 +29,8 @@ function makeSquare(x, y, length, speed) {
 }
 
 // The ship the user controls
-var ship = makeSquare(50, canvas.height / 2 - 25, 50, 5);
+var ship = makeSquare(50, canvas.height / 2 - 25, 50, 15);
+var teleporter = makeSquare(300, canvas.height / 2 - 25, 30, 0);
 var lives = 1000;
 
 
@@ -180,7 +181,7 @@ function draw() {
   enemies.forEach(function(enemy, i) {
     if (isColliding(enemy, ship)) {
 
-      lives-= 15;
+      lives-= 8;
       if (lives < 1){
         gameOver = true;
       }
@@ -216,12 +217,17 @@ function draw() {
         lives+=5;
         shooting = false;
         // Make the game harder
-        if (score % 3 === 0 && timeBetweenEnemies > 1000) {
+        if (score % 3 === 0 && timeBetweenEnemies > 0) {
           clearInterval(timeoutId);
           timeBetweenEnemies -= 1000;
+          if (timeBetweenEnemies == -1000)timeBetweenEnemies+=2000;
           timeoutId = setInterval(makeEnemy, timeBetweenEnemies);
         } else if (score % 2 === 0) {
           enemyBaseSpeed += 1;
+        }
+        if (isColliding(teleporter, enemy)) {
+          enemies[i].x = 500;
+          enemies[i].y = Math.round(Math.random() * (canvas.height - enemySize * 2)) + enemySize;
         }
       }
     });
