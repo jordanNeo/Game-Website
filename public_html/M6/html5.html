@@ -150,15 +150,15 @@ canvas.addEventListener('keyup', function(event) {
     down = false;
   }
 });
-canvas.addEventListener('keydown', function(event) {
+canvas.addEventListener('keydown', function(event) { //jal88 7/10/2022
   event.preventDefault();
-  if (event.keyCode === 87) { // UP
+  if (event.keyCode === 87) { // up-w
     up2 = true;
   }
-  if (event.keyCode === 83) { // DOWN
+  if (event.keyCode === 83) { // down-s
     down2 = true;
   }
-  if (event.keyCode === 9) { 
+  if (event.keyCode === 9) { //shoot-tab
     shoot2();
   }
 });
@@ -166,10 +166,10 @@ canvas.addEventListener('keydown', function(event) {
 // Listen for keyup events
 canvas.addEventListener('keyup', function(event) {
   event.preventDefault();
-  if (event.keyCode === 87) { // UP 
+  if (event.keyCode === 87) { // up-w
     up2 = false;
   }
-  if (event.keyCode === 83) { // DOWN
+  if (event.keyCode === 83) { // down-s
     down2 = false;
   }
 });
@@ -214,7 +214,7 @@ function draw() {
   });
   // Collide the ship with enemies
   enemies.forEach(function(enemy, i){
-    if (isColliding(enemy, ship)) {
+    if (isColliding(enemy, ship)) {  //jal88 7/10/22
       lives-= 8;
       if (lives < 1){
         gameOver = true;
