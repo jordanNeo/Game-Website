@@ -30,7 +30,7 @@ function makeSquare(x, y, length, speed) {
 
 // The ship the user controls
 var ship = makeSquare(50, canvas.height / 2 - 25, 50, 15);
-var teleporter = makeSquare(300, canvas.height / 2 - 25, 30, 0);
+var ship2 = makeSquare(50, canvas.height / 3 - 25, 50, 15);
 var lives = 1000;
 
 
@@ -38,11 +38,17 @@ var lives = 1000;
 var up = false;
 var down = false;
 var space = false;
+var up2 = false;
+var down2 = false;
+var shoot2 = false;
 
 // Is a bullet already on the canvas?
 var shooting = false;
+var shooting2 = false;
+
 // The bulled shot from the ship
 var bullet = makeSquare(0, 0, 10, 10);
+var bullet2 = makeSquare(0, 0, 10, 10);
 
 // An array for enemies (in case there are more than one)
 var enemies = [];
@@ -144,6 +150,29 @@ canvas.addEventListener('keyup', function(event) {
     down = false;
   }
 });
+canvas.addEventListener('keydown', function(event) {
+  event.preventDefault();
+  if (event.keyCode === 87) { // UP
+    up = true;
+  }
+  if (event.keyCode === 83) { // DOWN
+    down = true;
+  }
+  if (event.keyCode === 81) { // SPACE
+    shoot2();
+  }
+});
+
+// Listen for keyup events
+canvas.addEventListener('keyup', function(event) {
+  event.preventDefault();
+  if (event.keyCode === 87) { // UP 
+    up = false;
+  }
+  if (event.keyCode === 83) { // DOWN
+    down = false;
+  }
+});
 
 // Clear the canvas
 function erase() {
@@ -157,6 +186,13 @@ function shoot() {
     shooting = true;
     bullet.x = ship.x + ship.l;
     bullet.y = ship.y + ship.l / 2;
+  }
+}
+function shoot2() {
+  if (!shooting2) {
+    shooting = true;
+    bullet2.x = ship2.x + ship2.l;
+    bullet2.y = ship2.y + ship2.l / 2;
   }
 }
 
@@ -178,14 +214,22 @@ function draw() {
     enemy.draw();
   });
   // Collide the ship with enemies
-  enemies.forEach(function(enemy, i) {
+  enemies.forEach(function(enemy, i){
     if (isColliding(enemy, ship)) {
-
       lives-= 8;
       if (lives < 1){
         gameOver = true;
       }
-      
+    }
+  });
+    enemies.forEach(function(enemy, i) {
+    if (isColliding(enemy, ship2)) {
+
+      lives-= 8;
+      setInterval(makeEnemy, 800);
+      if (lives < 1){
+        gameOver = true;
+      }
     }
   });
   // Move the ship
@@ -202,9 +246,23 @@ function draw() {
   if (ship.y > canvas.height - ship.l) {
     ship.y = canvas.height - ship.l;
   }
+  if (down) {
+    ship2.y += ship2.s;
+  }
+  if (up) {
+    ship2.y -= ship2.s;
+  }
+  // Don't go out of bounds
+  if (ship2.y < 0) {
+    ship2.y = 0;
+  }
+  if (ship2.y > canvas.height - ship2.l) {
+    ship2.y = canvas.height - ship2.l;
+  }
   // Draw the ship
   context.fillStyle = '#FF0000';
   ship.draw();
+  ship2.draw();
   // Move and draw the bullet
   if (shooting) {
     // Move the bullet
@@ -217,17 +275,12 @@ function draw() {
         lives+=5;
         shooting = false;
         // Make the game harder
-        if (score % 3 === 0 && timeBetweenEnemies > 0) {
+        if (score % 3 === 0 && timeBetweenEnemies > 300) {
           clearInterval(timeoutId);
-          timeBetweenEnemies -= 1000;
-          if (timeBetweenEnemies == -1000)timeBetweenEnemies+=2000;
+          timeBetweenEnemies -= 250;
           timeoutId = setInterval(makeEnemy, timeBetweenEnemies);
         } else if (score % 2 === 0) {
           enemyBaseSpeed += 1;
-        }
-        if (isColliding(teleporter, enemy)) {
-          enemies[i].x = 500;
-          enemies[i].y = Math.round(Math.random() * (canvas.height - enemySize * 2)) + enemySize;
         }
       }
     });
@@ -238,6 +291,34 @@ function draw() {
     // Draw the bullet
     context.fillStyle = '#0000FF';
     bullet.draw();
+  }
+  if (shooting2) {
+    // Move the bullet
+    bullet2.x += bullet2.s;
+    // Collide the bullet with enemies
+    enemies.forEach(function(enemy, i) {
+      if (isColliding(bullet2, enemy)) {
+        enemies.splice(i, 1);
+        score++;
+        lives+=5;
+        shooting = false;
+        // Make the game harder
+        if (score % 3 === 0 && timeBetweenEnemies > 300) {
+          clearInterval(timeoutId);
+          timeBetweenEnemies -= 250;
+          timeoutId = setInterval(makeEnemy, timeBetweenEnemies);
+        } else if (score % 2 === 0) {
+          enemyBaseSpeed += 1;
+        }
+      }
+    });
+    // Collide with the wall
+    if (bullet2.x > canvas.width) {
+      shooting2 = false;
+    }
+    // Draw the bullet
+    context.fillStyle = '#0000FF';
+    bullet2.draw();
   }
   // Draw the score
   context.fillStyle = '#000000';
