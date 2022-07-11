@@ -12,6 +12,7 @@
 var canvas = document.getElementById('canvas');
 // Get the canvas drawing context
 var context = canvas.getContext('2d');
+canvas.style.transform = "rotate(90deg)";
 
 
 // Create an object representing a square on the canvas
@@ -179,7 +180,7 @@ function draw() {
   enemies.forEach(function(enemy, i) {
     if (isColliding(enemy, ship)) {
 
-      lives--;
+      lives-= 2;
       if (lives < 1){
         gameOver = true;
       }
@@ -238,7 +239,7 @@ function draw() {
   context.fillText('Score: ' + score, 1, 25)
   context.font = '24px Arial';
   context.textAlign = 'left';
-  context.fillText('Health: ' + lives, 500, 25)
+  context.fillText('Health: ' + lives, 400, 25)
   // End or continue the game
   if (gameOver) {
     endGame();
