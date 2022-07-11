@@ -93,13 +93,7 @@ function menu() {
   // Start the game on a click
   canvas.addEventListener('click', startGame);
 }
-function health() {
-  erase();
-  context.fillStyle = '#000000';
-  context.font = '18px Arial';
-  context.textAlign = 'center';
-  context.fillText('Lives: ' + lives, 5, 5);
-}
+
 
 // Start the game
 function startGame() {
@@ -181,7 +175,6 @@ function draw() {
   // Collide the ship with enemies
   enemies.forEach(function(enemy, i) {
     if (isColliding(enemy, ship)) {
-      lives -=1;
       if (lives == 0){
         gameOver = true;
       }
@@ -214,6 +207,7 @@ function draw() {
       if (isColliding(bullet, enemy)) {
         enemies.splice(i, 1);
         score++;
+        lives--;
         shooting = false;
         // Make the game harder
         if (score % 10 === 0 && timeBetweenEnemies > 1000) {
@@ -238,6 +232,9 @@ function draw() {
   context.font = '24px Arial';
   context.textAlign = 'left';
   context.fillText('Score: ' + score, 1, 25)
+  context.font = '24px Arial';
+  context.textAlign = 'left';
+  context.fillText('Lives: ' + lives, 1, 500)
   // End or continue the game
   if (gameOver) {
     endGame();
