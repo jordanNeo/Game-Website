@@ -167,7 +167,11 @@ function draw() {
   enemies.forEach(function(enemy) {
     enemy.x -= enemy.s;
     if (enemy.x < 0) {
-      gameOver = true;
+      shooting=false;
+      lives--;
+      if (lives < 1){
+        gameOver = true;
+      }
     }
     context.fillStyle = '#00FF00';
     enemy.draw();
@@ -175,6 +179,8 @@ function draw() {
   // Collide the ship with enemies
   enemies.forEach(function(enemy, i) {
     if (isColliding(enemy, ship)) {
+      shooting=false;
+      lives--;
       if (lives < 1){
         gameOver = true;
       }
