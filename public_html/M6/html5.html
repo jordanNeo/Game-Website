@@ -173,9 +173,12 @@ function draw() {
     enemy.draw();
   });
   // Collide the ship with enemies
+  if (isColliding(enemy, ship)) {
+      lives--;
+      
+    }
   enemies.forEach(function(enemy, i) {
     if (isColliding(enemy, ship)) {
-      lives--;
       if (lives < 1){
         gameOver = true;
       }
