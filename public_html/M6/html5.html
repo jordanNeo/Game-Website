@@ -173,10 +173,6 @@ function draw() {
     enemy.draw();
   });
   // Collide the ship with enemies
-  if (isColliding(enemy, ship)) {
-      lives--;
-      
-    }
   enemies.forEach(function(enemy, i) {
     if (isColliding(enemy, ship)) {
       if (lives < 1){
@@ -185,6 +181,9 @@ function draw() {
       
     }
   });
+  if (isColliding(enemy, ship)) {
+      lives--;
+    }
   // Move the ship
   if (down) {
     ship.y += ship.s;
