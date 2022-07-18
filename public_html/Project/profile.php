@@ -93,6 +93,17 @@ if (isset($_POST["save"])) {
 $email = get_user_email();
 $username = get_username();
 ?>
+<div class="container-fluid">
+    <h1>Profile</h1>
+    <div>
+        Best Score: <?php echo get_best_score(get_user_id()); ?>
+    </div>
+    <div>
+        <?php
+        $duration = "latest";
+        require(__DIR__ . "/../../partials/scores_table.php");
+        ?>
+    </div>
 <form method="POST" onsubmit="return validate(this);">
     <div class="mb-3">
         <label for="email">Email</label>

@@ -6,8 +6,8 @@ error_log("save_score received data: " . var_export($_REQUEST, true));
 $score = (int)se($_POST, "score", 0, false);
 
 //if data is valid pass it to save_score
-$standalone_enabled = false; //I'm just blocking standalone since I'm using server-side score handling
-if ($score > 0  && $standalone_enabled) {
+ //I'm just blocking standalone since I'm using server-side score handling
+if ($score > 0 ) {
     save_score($score);
 }
 //This demo will be setup to demonstrate a front end game

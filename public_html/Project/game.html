@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+  <main>
+    <canvas  tabindex="0" id="canvas" width="600px" height="600px" style="border: 1px solid black;">
+    
+    </canvas>
+  </main>
+  <script>
+// Arcade Shooter game
+
+// Get a reference to the canvas DOM element
+var canvas = document.getElementById('canvas');
+// Get the canvas drawing context
+var context = canvas.getContext('2d');
+
+
+async function postData(data = {}, url = "/Project/api/save_score.php") {
+
+console.log(Object.keys(data).map(function(key) {
+    return "" + key + "=" + data[key]; // line break for wrapping only
+}).join("&"));
+let example = 1;
+if (example === 1) {
+    // Default options are marked with *
+    const response = await fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            //'Content-Type': 'application/json'
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: Object.keys(data).map(function(key) {
+            return "" + key + "=" + data[key]; // line break for wrapping only
+        }).join("&") //JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
+
+    }
+}
+
+
+// Create an object representing a square on the canvas
+function makeSquare(x, y, length, speed) {
+  return {
+    x: x,
+    y: y,
+    l: length,
+    s: speed,
+    draw: function() {
+      context.fillRect(this.x, this.y, this.l, this.l);
+    }
+  };
+}
+
+// The ship the user controls
+var ship = makeSquare(50, canvas.height / 2 - 25, 50, 15);
+var ship2 = makeSquare(50, canvas.height / 3 - 25, 50, 15);
+var lives = 1000;
+
+
+// Flags to tracked which keys are pressed
+var up = false;
+var down = false;
+var space = false;
+var up2 = false;
+var down2 = false;
+var shoot2 = false;
+
+// Is a bullet already on the canvas?
+var shooting = false;
+var shooting2 = false;
+
+// The bulled shot from the ship
+var bullet = makeSquare(0, 0, 10, 10);
+var bullet2 = makeSquare(0, 0, 10, 10);
+
+// An array for enemies (in case there are more than one)
+var enemies = [];
+
+// Add an enemy object to the array
+var enemyBaseSpeed = 2;
+function makeEnemy() {
+  var enemyX = canvas.width;
+  var enemySize = Math.round((Math.random() * 15)) + 15;
+  var enemyY = Math.round(Math.random() * (canvas.height - enemySize * 2)) + enemySize;
+  var enemySpeed = Math.round(Math.random() * enemyBaseSpeed) + enemyBaseSpeed;
+  enemies.push(makeSquare(enemyX, enemyY, enemySize, enemySpeed));
+}
+
+// Check if number a is in the range b to c (exclusive)
+function isWithin(a, b, c) {
+  return (a > b && a < c);
+}
+
+// Return true if two squares a and b are colliding, false otherwise
+function isColliding(a, b) {
+  var result = false;
+  if (isWithin(a.x, b.x, b.x + b.l) || isWithin(a.x + a.l, b.x, b.x + b.l)) {
+    if (isWithin(a.y, b.y, b.y + b.l) || isWithin(a.y + a.l, b.y, b.y + b.l)) {
+      result = true;
+    }
+  }
+  return result;
+}
+
+// Track the user's score
+var points = 0;
+// The delay between enemies (in milliseconds)
+var timeBetweenEnemies = 5 * 1000;
+// ID to track the spawn timeout
+var timeoutId = null;
+
+// Show the game menu and instructions
+function menu() {
+  erase();
+  context.fillStyle = '#000000';
+  context.font = '36px Arial';
+  context.textAlign = 'center';
+  context.fillText('Shoot \'Em!', canvas.width / 2, canvas.height / 4);
+  context.font = '24px Arial';
+  context.fillText('Click to Start', canvas.width / 2, canvas.height / 2);
+  context.font = '18px Arial';
+  context.fillText('Up/Down to move, Space to shoot.', canvas.width / 2, (canvas.height / 4) * 3);
+  // Start the game on a click
+  canvas.addEventListener('click', startGame);
+}
+
+
+// Start the game
+function startGame() {
+	// Kick off the enemy spawn interval
+  timeoutId = setInterval(makeEnemy, timeBetweenEnemies);
+  // Make the first enemy
+  setTimeout(makeEnemy, 1000);
+  // Kick off the draw loop
+  draw();
+  // Stop listening for click events
+  canvas.removeEventListener('click', startGame);
+}
+
+// Show the end game screen
+function endGame() {
+	// Stop the spawn interval
+  clearInterval(timeoutId);
+  // Show the final score
+  erase();
+  context.fillStyle = '#000000';
+  context.font = '24px Arial';
+  context.textAlign = 'center';
+  context.fillText('Game Over. Final Score: ' + points, canvas.width / 2, canvas.height / 2);
+  postData({
+                        score: points,
+                    }, "/Project/api/save_score.php").then(data => {
+                        console.log(data);
+                        //quick, brief example (you wouldn't want to use alert)
+                        if (data.status === 200) {
+                            //saved successfully
+                            alert(data.message);
+                        } else {
+                            //some error occurred, maybe want to handle it before resetting
+                            alert(data.message);
+                        }
+    })
+}
+
+// Listen for keydown events
+canvas.addEventListener('keydown', function(event) {
+  event.preventDefault();
+  if (event.keyCode === 38) { // UP
+    up = true;
+  }
+  if (event.keyCode === 40) { // DOWN
+    down = true;
+  }
+  if (event.keyCode === 32) { // SPACE
+    shoot();
+  }
+});
+
+// Listen for keyup events
+canvas.addEventListener('keyup', function(event) {
+  event.preventDefault();
+  if (event.keyCode === 38) { // UP 
+    up = false;
+  }
+  if (event.keyCode === 40) { // DOWN
+    down = false;
+  }
+});
+canvas.addEventListener('keydown', function(event) { //jal88 7/10/2022
+  event.preventDefault();
+  if (event.keyCode === 87) { // up-w
+    up2 = true;
+  }
+  if (event.keyCode === 83) { // down-s
+    down2 = true;
+  }
+  if (event.keyCode === 9) { //shoot-tab
+    shoot2();
+  }
+});
+
+// Listen for keyup events
+canvas.addEventListener('keyup', function(event) {
+  event.preventDefault();
+  if (event.keyCode === 87) { // up-w
+    up2 = false;
+  }
+  if (event.keyCode === 83) { // down-s
+    down2 = false;
+  }
+});
+
+// Clear the canvas
+function erase() {
+  context.fillStyle = '#FFFFFF';
+  context.fillRect(0, 0, 600, 600);
+}
+
+// Shoot the bullet (if not already on screen)
+function shoot() {
+  if (!shooting) {
+    shooting = true;
+    bullet.x = ship.x + ship.l;
+    bullet.y = ship.y + ship.l / 2;
+  }
+}
+function shoot2() {
+  if (!shooting2) {
+    shooting2 = true;
+    bullet2.x = ship2.x + ship2.l;
+    bullet2.y = ship2.y + ship2.l / 2;
+  }
+}
+
+// The main draw loop
+function draw() {
+  erase();
+  var gameOver = false;
+  // Move and draw the enemies
+  enemies.forEach(function(enemy) {
+    enemy.x -= enemy.s;
+    if (enemy.x == 0) {
+      lives-= 300;
+      if (lives < 1){
+        gameOver = true;
+      }
+    }
+    context.fillStyle = '#00FF00';
+    enemy.draw();
+  });
+  // Collide the ship with enemies
+  enemies.forEach(function(enemy, i){
+    if (isColliding(enemy, ship)) {  //jal88 7/10/22
+      lives-= 8;
+      if (lives < 1){
+        gameOver = true;
+      }
+    }
+  });
+    enemies.forEach(function(enemy, i) {
+    if (isColliding(enemy, ship2)) {
+
+      lives-= 8;
+      setInterval(makeEnemy, 800);
+      if (lives < 1){
+        gameOver = true;
+      }
+    }
+  });
+  // Move the ship
+  if (down) {
+    ship.y += ship.s;
+  }
+  if (up) {
+    ship.y -= ship.s;
+  }
+  // Don't go out of bounds
+  if (ship.y < 0) {
+    ship.y = 0;
+  }
+  if (ship.y > canvas.height - ship.l) {
+    ship.y = canvas.height - ship.l;
+  }
+  if (down2) {
+    ship2.y += ship2.s;
+  }
+  if (up2) {
+    ship2.y -= ship2.s;
+  }
+  // Don't go out of bounds
+  if (ship2.y < 0) {
+    ship2.y = 0;
+  }
+  if (ship2.y > canvas.height - ship2.l) {
+    ship2.y = canvas.height - ship2.l;
+  }
+  // Draw the ship
+  context.fillStyle = '#FF0000';
+  ship.draw();
+  ship2.draw();
+  // Move and draw the bullet
+  if (shooting) {
+    // Move the bullet
+    bullet.x += bullet.s;
+    // Collide the bullet with enemies
+    enemies.forEach(function(enemy, i) {
+      if (isColliding(bullet, enemy)) {
+        enemies.splice(i, 1);
+        points++;
+        lives+=50;
+        shooting = false;
+        shooting2 = false;
+        // Make the game harder
+        if (points % 3 === 0 && timeBetweenEnemies > 300) {
+          clearInterval(timeoutId);
+          timeBetweenEnemies -= 250;
+          timeoutId = setInterval(makeEnemy, timeBetweenEnemies);
+        } else if (points % 2 === 0) {
+          enemyBaseSpeed += 1;
+        }
+      }
+    });
+    // Collide with the wall
+    if (bullet.x > canvas.width) {
+      shooting = false;
+    }
+    // Draw the bullet
+    context.fillStyle = '#0000FF';
+    bullet.draw();
+  }
+  if (shooting2) {
+    // Move the bullet
+    bullet2.x += bullet2.s;
+    // Collide the bullet with enemies
+    enemies.forEach(function(enemy, i) {
+      if (isColliding(bullet2, enemy)) {
+        enemies.splice(i, 1);
+        points++;
+        lives+=50;
+        shooting2 = false;
+        // Make the game harder
+        if (points % 3 === 0 && timeBetweenEnemies > 300) {
+          clearInterval(timeoutId);
+          timeBetweenEnemies -= 250;
+          timeoutId = setInterval(makeEnemy, timeBetweenEnemies);
+        } else if (points % 2 === 0) {
+          enemyBaseSpeed += 1;
+        }
+      }
+    });
+    // Collide with the wall
+    if (bullet2.x > canvas.width) {
+      shooting2 = false;
+    }
+    // Draw the bullet
+    context.fillStyle = '#0000FF';
+    bullet2.draw();
+  }
+  // Draw the score
+  context.fillStyle = '#000000';
+  context.font = '24px Arial';
+  context.textAlign = 'left';
+  context.fillText('Score: ' + points, 1, 25)
+  context.font = '24px Arial';
+  context.textAlign = 'left';
+  context.fillText('Health: ' + lives, 400, 25)
+  // End or continue the game
+  if (gameOver) {
+    endGame();
+  } else {
+    window.requestAnimationFrame(draw);
+  }
+}
+
+// Start the game
+menu();
+canvas.focus();
+</script>
+</html>

@@ -18,9 +18,27 @@ nav li a{color: orange;
     font-family: Impact;
     font-size: large;
 }
+nav li a:hover{color: orange;
+    font-family: Impact;
+    font-size: large;
+    color: purple;
+
+}
 input{border-radius: 15%;}
 body{
     background-color: black;
     color: orange;
 
+}
+
+.table{
+    border: 4px solid;
+    border-collapse: separate;
+  border-spacing: 100px 5px;
+  text-align: center;
+}
+
+.gamelink{
+    font-size: 75px;
+    font-family: Impact;
 }
