@@ -42,3 +42,19 @@ body{
     font-size: 75px;
     font-family: Impact;
 }
+
+#game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+}
+canvas{
+    box-shadow: orange 10px 10px 20px;
+}
+#restart{
+    position: absolute;
+    bottom: 10px;
+
+}

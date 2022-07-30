@@ -2,7 +2,7 @@
 require(__DIR__ . "/../../partials/nav.php");
 ?>
 <h1>1-Machine Online Arcade</h1>
-<a href="<?php echo get_url('game.html'); ?>" class="gamelink">Snake</a>
+<a href="<?php echo get_url('snake.html'); ?>" class="gamelink">Snake</a>
 <div class="description"><p>Welcome to the best online arcade! Due to shortages of time and work ethic we only have one very fun game available. <br>
 Snake! In this online adventure you will live as a snake, moving around the map to collect food to survive! <br>
 Be careful though, you are surrounded by an electric fence that will kill you if you touch it...
