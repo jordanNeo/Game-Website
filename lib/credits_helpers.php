@@ -17,9 +17,9 @@ function refresh_user_credits()
 function give_credits($user, $credits, $reason)
 {
     //error_log($user ,0);
-    //error_log($credits ,0);
+
     //error_log(get_user_id() ,0);
-    if ($credits > 0) {
+    if ($credits != 0) {
         $query = "INSERT INTO CreditHistory (user_id, diff, reason) 
             VALUES (:usr, :diff, :r)";
 
