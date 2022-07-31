@@ -18,6 +18,9 @@ require(__DIR__ . "/user_helpers.php");
 //Score Helpers
 require(__DIR__ . "/score_helpers.php");
 
+//credit reset
+require(__DIR__ . "/credits_helpers.php");
+
 
 //duplicate email/username
 require(__DIR__ . "/duplicate_user_details.php");
