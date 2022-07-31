@@ -22,7 +22,7 @@ function save_score($score)
         session_start();
     }
     if (is_logged_in()) {
-        error_log(get_user_id() ,0);
+
         //todo save
         $db = getDB();
         $stmt = $db->prepare("INSERT INTO Scores(score, user_id) VALUES (:s, :uid)");
