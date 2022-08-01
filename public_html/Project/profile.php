@@ -97,6 +97,8 @@ $username = get_username();
     <h1>Profile</h1>
     <div>
         Best Score: <?php echo get_best_score(get_user_id()); ?>
+        <br>
+        Credits: <?php echo get_credits(get_user_id()); ?>
     </div>
     <div>
         <?php

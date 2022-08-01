@@ -65,6 +65,7 @@ function get_best_score($user_id)
     return 0;
 }
 
+
 function get_latest_scores($user_id, $limit = 10)
 {
     //I'm capping my limit to 1-50

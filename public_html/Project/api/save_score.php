@@ -4,11 +4,13 @@ error_log("save_score received data: " . var_export($_REQUEST, true));
 
 //handle the potentially incoming post request
 $score = (int)se($_POST, "score", 0, false);
+$user_id = get_user_id();
 
 //if data is valid pass it to save_score
- //I'm just blocking standalone since I'm using server-side score handling
+
 if ($score > 0 ) {
     save_score($score);
+    
 }
 //This demo will be setup to demonstrate a front end game
 //vs one where the logic is mostly done on the back end
@@ -20,6 +22,7 @@ function save_score($score)
         session_start();
     }
     if (is_logged_in()) {
+
         //todo save
         $db = getDB();
         $stmt = $db->prepare("INSERT INTO Scores(score, user_id) VALUES (:s, :uid)");
@@ -32,6 +35,11 @@ function save_score($score)
             error_log("Error saving score: " . var_export($e, true));
             $response["message"] = "Error saving score details";
         }
+        $credits = 1;
+        $reason = "Hey you tried";
+        if ($score > 5) {$credits = 2; $reason = "Score over 5";}
+        if ($score > 10) {$credits = 3; $reason = "Score over 10";}
+        give_credits(get_user_id(), $credits, $reason);
     } else {
         $response["message"] = "Not logged in";
         http_response_code(403);
@@ -39,3 +47,4 @@ function save_score($score)
         echo json_encode($response);
         die();
 }
+
