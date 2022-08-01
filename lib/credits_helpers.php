@@ -17,9 +17,9 @@ function refresh_user_credits()
 function give_credits($user, $credits, $reason)
 {
     //error_log($user ,0);
-    //error_log($credits ,0);
+
     //error_log(get_user_id() ,0);
-    if ($credits > 0) {
+    if ($credits != 0) {
         $query = "INSERT INTO CreditHistory (user_id, diff, reason) 
             VALUES (:usr, :diff, :r)";
 
@@ -45,4 +45,22 @@ function give_credits($user, $credits, $reason)
         }
     }
     return false;
+}
+
+function get_credits($user_id)
+{
+    $query = "SELECT credits from Users WHERE id = :id";
+    $db = getDB();
+    $stmt = $db->prepare($query);
+    try {
+        $stmt->execute([":id" => $user_id]);
+        $r = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($r) {
+            return (int)se($r, "credits", 0, false);
+        }
+    } catch (PDOException $e) {
+        error_log("Error fetching credits for user $user_id: " . var_export($e->errorInfo, true));
+        flash("Error retrieving credits", "danger");
+    }
+    return 0;
 }
