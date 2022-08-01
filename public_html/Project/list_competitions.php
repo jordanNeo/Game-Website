@@ -9,6 +9,7 @@ if (isset($_POST["join"])) {
     $cost = se($_POST, "join_fee", 0, false);
     $balance = get_credits(get_user_id());
     join_competition($comp_id, $user_id, $cost);
+
 }
 $per_page = 5;
 paginate("SELECT count(1) as total FROM Competitions WHERE expires > current_timestamp() AND paid_out < 1 AND did_calc < 1");
@@ -71,3 +72,6 @@ try {
     </table>
     <?php include(__DIR__ . "/../../partials/pagination.php"); ?>
 </div>
+<?php 
+require(__DIR__."/../../partials/flash.php");
+?>

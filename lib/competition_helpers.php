@@ -30,6 +30,7 @@ function add_to_competition($comp_id, $user_id)
 
 function join_competition($comp_id, $user_id, $cost)
 {
+
     $balance = get_credits(get_user_id());
     if ($comp_id > 0) {
         if ($balance >= $cost) {
@@ -47,27 +48,27 @@ function join_competition($comp_id, $user_id, $cost)
                             if (add_to_competition($comp_id, $user_id)) {
                                 update_participants($comp_id);
                                 flash("Successfully joined $name", "success");
+                                error_log("you pay",0);
                             }
                         }
                         else if (give_credits(get_user_id() ,$cost, "join-comp")) {
                             if (add_to_competition($comp_id, $user_id)) {
                                 flash("Successfully joined $name", "success");
+                                error_log("you pay",0);
                             }
                         } else {
+                            error_log("no pay",0);
                             flash("Failed to pay for competition", "danger");
                         }
                     } else {
                         flash("You can't afford to join this competition", "warning");
+                        error_log("no pay",0);
                     }
                 }
             } catch (PDOException $e) {
                 error_log("Comp lookup error " . var_export($e, true));
                 flash("There was an error looking up the competition", "danger");
             }
-        } else {
-            flash("You can't afford to join this competition", "warning");
         }
-    } else {
-        flash("Invalid competition, please try again", "danger");
     }
 }
