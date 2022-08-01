@@ -7,7 +7,6 @@ if (isset($_POST["name"]) && !empty($_POST["name"])) {
     $cost = (int)se($_POST, "starting_reward", 0, false);
     $cost++;
     $cost += (int)se($_POST, "join_fee", 0, false);
-    error_log($cost,0);
     $name = se($_POST, "name", "N/A", false);
     $balance = get_credits(get_user_id());
     error_log($balance,0);

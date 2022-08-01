@@ -27,6 +27,11 @@ require(__DIR__ . "/credits_helpers.php");
 //competitions
 require(__DIR__ . "/competition_helpers.php");
 
+//paginate
+require(__DIR__ . "/paginate.php");
+
+
+
 
 //duplicate email/username
 require(__DIR__ . "/duplicate_user_details.php");
