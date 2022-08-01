@@ -150,7 +150,7 @@ function calc_winners()
                                 }
                                 error_log("User $user_id Second place in $name with score of $score");
                             } else if ($index == 2) {
-                                if (give_credits($aid, tpr, "won-comp")) {
+                                if (give_credits($aid, $tpr, "won-comp")) {
                                     $atleastOne = true;
                                 }
                                 error_log("User $user_id Third place in $name with score of $score");
