@@ -15,8 +15,22 @@ require(__DIR__ . "/sanitizer.php");
 //TODO 3: User helpers
 require(__DIR__ . "/user_helpers.php");
 
+//TODO 3: User helpers
+require(__DIR__ . "/save_data.php");
+
 //Score Helpers
 require(__DIR__ . "/score_helpers.php");
+
+//credit reset
+require(__DIR__ . "/credits_helpers.php");
+
+//competitions
+require(__DIR__ . "/competition_helpers.php");
+
+//paginate
+require(__DIR__ . "/paginate.php");
+
+
 
 
 //duplicate email/username
