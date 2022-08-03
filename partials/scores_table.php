@@ -4,6 +4,7 @@
 if (!isset($duration)) {
     $duration = "day"; //choosing to default to day
 }
+$results =[];
 
 if (in_array($duration, ["day", "week", "month", "lifetime"])) {
     $results = get_top_10($duration);
@@ -37,6 +38,8 @@ switch ($duration) {
         break;
     default:
         $title = "Invalid Scoreboard";
+        error_log($duration,0);
+        error_log($title,0);
         break;
 }
 $ignored = ["id"];

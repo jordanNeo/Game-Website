@@ -72,10 +72,7 @@ try {
     //$scores is defined above
     $title = $comp . " Top Scores";
     $comp_id = $id;
-    $duration = "competiton";
+    $duration = "competition";
     include(__DIR__ . "/../../partials/scores_table.php");
     ?>
 </div>
-<?php
-require(__DIR__ . "/../../partials/footer.php");
-?>

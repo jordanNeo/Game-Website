@@ -148,9 +148,10 @@ try {
             <a href="?edit">Edit</a>
         <?php endif; ?>
         <?php if ($isVisible || $isMe) : ?>
-            TODO: Define your visible profile
 
-            This is <?php se($username); ?>
+            <?php se($username); ?>
+            <br>
+            Credits: <?php se(get_credits($user_id)); ?>
             <div>
                 Best Score: <?php echo get_best_score($user_id); ?>
             </div>
