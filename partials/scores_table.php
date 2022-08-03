@@ -4,6 +4,7 @@
 if (!isset($duration)) {
     $duration = "day"; //choosing to default to day
 }
+$results =[];
 
 if (in_array($duration, ["day", "week", "month", "lifetime"])) {
     $results = get_top_10($duration);
@@ -37,8 +38,11 @@ switch ($duration) {
         break;
     default:
         $title = "Invalid Scoreboard";
+        error_log($duration,0);
+        error_log($title,0);
         break;
 }
+$ignored = ["id"];
 ?>
 <div class="scores" >
     <div class="card-body">
@@ -48,7 +52,7 @@ switch ($duration) {
             </div>
         </div>
         <div class="card-text">
-            <table class="table">
+        <table class="table">
                 <?php if (count($results) == 0) : ?>
                     <p>No results to show</p>
                 <?php else : ?>
@@ -62,8 +66,16 @@ switch ($duration) {
                         <?php endif; ?>
                         <tr>
                             <?php foreach ($record as $column => $value) : ?>
-                                <td><?php se($value, null, "N/A"); ?></td>
-                            <?php endforeach; ?>
+                                <td>
+                                    <?php if ($column === "username") : ?>
+                                        <?php $user_id = se($record, "user_id", 0, false);
+                                        $username = se($record, "username", "", false);
+                                        include(__DIR__ . "/user_profile.php"); ?>
+                                    <?php elseif (!in_array($column, $ignored)) : ?>
+                                        <?php se($value, null, "N/A"); ?></td>
+                            <?php endif; ?>
+
+                        <?php endforeach; ?>
                         </tr>
                     <?php endforeach; ?>
             </table>
