@@ -29,7 +29,7 @@ function save_score($score)
         try {
             $stmt->execute([":s" => $score, ":uid" => get_user_id()]);
             $response["status"] = 200;
-            $response["message"] = "Saved Score";
+            $response["message"] = "Your score has been saved";
             http_response_code(200);
         } catch (PDOException $e) {
             error_log("Error saving score: " . var_export($e, true));
@@ -41,7 +41,7 @@ function save_score($score)
         if ($score > 10) {$credits = 3; $reason = "Score over 10";}
         give_credits(get_user_id(), $credits, $reason);
     } else {
-        $response["message"] = "Not logged in";
+        $response["message"] = "You must be logged in to save your score";
         http_response_code(403);
     }
         echo json_encode($response);
