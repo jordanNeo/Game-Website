@@ -1,5 +1,6 @@
-<!DOCTYPE html>
-<html>
+<?php
+require(__DIR__ . "/../../partials/nav.php");
+?>
   <main>
     <body id="game">
         <link rel="stylesheet" href="styles.css">
@@ -137,10 +138,10 @@ console.log(Object.keys(data).map(function(key) {
                         //quick, brief example (you wouldn't want to use alert)
                         if (data.status === 200) {
                             //saved successfully
-                            alert(data.message);
+                            flash("Your score has been saved", "success")
                         } else {
                             //some error occurred, maybe want to handle it before resetting
-                            alert(data.message);
+                            flash("You must be logged in to save your score", "warning")
                         }
     })
             }
@@ -231,4 +232,6 @@ console.log(Object.keys(data).map(function(key) {
 
         drawGame();
     </script>
-</html>
+<?php
+require(__DIR__ . "/../../partials/flash.php");
+?>
