@@ -31,11 +31,11 @@ if (isset($_POST["save"]) && $isMe && $isEdit) {
                 flash("The chosen " . $matches[1] . " is not available.", "warning");
             } else {
                 //TODO come up with a nice error message
-                echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
+                flash("Cannot update profile with these field values", "warning");
             }
         } else {
             //TODO come up with a nice error message
-            echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
+            flash("Cannot update profile with these field values", "warning");
         }
     }
 
