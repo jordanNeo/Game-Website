@@ -35,7 +35,7 @@ function save_score($score)
             error_log("Error saving score: " . var_export($e, true));
             $response["message"] = "Error saving score details";
         }
-        $credits = 1;
+        $credits = 30;
         $reason = "Hey you tried";
         if ($score > 5) {$credits = 2; $reason = "Score over 5";}
         if ($score > 10) {$credits = 3; $reason = "Score over 10";}

@@ -7,6 +7,10 @@ $isMe = $user_id == get_user_id();
 $isEdit = isset($_GET["edit"]);
 
 $db = getDB();
+
+$per_page = 5;
+
+paginate("SELECT COUNT(score) as total FROM Scores WHERE user_id = $user_id");
 ?>
 <?php
 if (isset($_POST["save"]) && $isMe && $isEdit) {
@@ -163,6 +167,7 @@ try {
                 $duration = "latest";
                 //Note: $user_id will be defined prior to this require() so should use whatever is set at the top
                 require(__DIR__ . "/../../partials/scores_table.php");
+                include(__DIR__ . "/../../partials/pagination.php"); 
                 ?>
             </div>
         <?php else : ?>
