@@ -30,7 +30,6 @@ function get_top_10($duration = "day")
         Scores.created <= addtime(LAST_DAY(CURDATE()), '23:59:59')";
     }
     //remember to prefix any ambiguous columns (Users and Scores both have created, modified, and id columns)
-    $query .= " ORDER BY score Desc, Scores.created desc LIMIT 10"; //newest of the same score is ranked higher
     error_log("get top 10 query: $query");
     $stmt = $db->prepare($query);
     $results = [];
@@ -68,20 +67,36 @@ function get_best_score($user_id)
 
 function get_latest_scores($user_id, $limit = 10)
 {
+    $params = [];
     //I'm capping my limit to 1-50
     if ($limit < 1 || $limit > 50) {
         $limit = 10;
     }
-    $query = "SELECT score, created from Scores where user_id = :id ORDER BY created desc LIMIT :limit";
+    $query = "SELECT score, created from Scores where user_id = :id ORDER BY created desc ";
+    $page = se($_GET, "page", 1, false); //default to page 1 (human readable number)
+    $per_page = 10; //how many items to show per page (hint, this could also be something the user can change via a dropdown or similar)
+    $offset = ($page - 1) * $per_page;
+    $query .= " LIMIT :offset, :count";
+    $params[":id"] = $user_id;
+    $params[":offset"] = $offset;
+    $params[":count"] = $per_page;
+
+    //newest of the same score is ranked higher
     $db = getDB();
     //IMPORTANT: this is required for the execute to set the limit variables properly
     //otherwise it'll convert the values to a string and the query will fail since LIMIT expects only numerical values and doesn't cast
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     //END IMPORTANT
 
-    $stmt = $db->prepare($query);
+    $stmt = $db->prepare($query); //dynamically generated query
+    //we'll want to convert this to use bindValue so ensure they're integers so lets map our array
+    foreach ($params as $key => $value) {
+        $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+        $stmt->bindValue($key, $value, $type);
+    }
+    $params = null;
     try {
-        $stmt->execute([":id" => $user_id, ":limit" => $limit]);
+        $stmt->execute($params);
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
         if ($r) {
             return $r;
