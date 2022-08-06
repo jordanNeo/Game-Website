@@ -76,12 +76,12 @@ function get_top_scores_for_comp($comp_id, $limit = 10)
 {
     $db = getDB();
 
-    $stmt = $db->prepare("SELECT * FROM (SELECT s.user_id, s.score,s.created, a.id as account_id, DENSE_RANK() OVER (PARTITION BY s.user_id ORDER BY s.score desc) as `rank` FROM Scores s
+    $stmt = $db->prepare("SELECT * FROM (SELECT a.username as username, s.score,s.created, s.user_id, DENSE_RANK() OVER (PARTITION BY s.user_id ORDER BY s.score desc) as `rank` FROM Scores s
     JOIN User_Competitions uc on uc.user_id = s.user_id
     JOIN Competitions c on uc.competition_id = c.id
     JOIN Users a on a.id = s.user_id
     WHERE c.id = :cid AND s.created BETWEEN uc.created AND c.expires
-    )as t where `rank` = 1 ORDER BY score desc LIMIT :limit");
+    )as t where `rank` = 1 ORDER BY score desc LIMIT :limit ");
     $scores = [];
     try {
         $stmt->bindValue(":cid", $comp_id, PDO::PARAM_INT);
@@ -150,7 +150,7 @@ function calc_winners()
                                 }
                                 error_log("User $user_id Second place in $name with score of $score");
                             } else if ($index == 2) {
-                                if (give_credits($aid, tpr, "won-comp")) {
+                                if (give_credits($aid, $tpr, "won-comp")) {
                                     $atleastOne = true;
                                 }
                                 error_log("User $user_id Third place in $name with score of $score");
