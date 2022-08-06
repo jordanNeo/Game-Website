@@ -1,6 +1,6 @@
 <table><tr><td> <em>Assignment: </em> IT202 Milestone 4 Arcade Project</td></tr>
 <tr><td> <em>Student: </em> Jordan Lee(jal88)</td></tr>
-<tr><td> <em>Generated: </em> 8/6/2022 3:56:24 AM</td></tr>
+<tr><td> <em>Generated: </em> 8/6/2022 4:01:15 AM</td></tr>
 <tr><td> <em>Grading Link: </em> <a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT202-451-M22/it202-milestone-4-arcade-project/grade/jal88" target="_blank">Grading</a></td></tr></table>
 <table><tr><td> <em>Instructions: </em> <ol><li>Checkout Milestone4 branch</li><li>Create a new markdown file called milestone4.md</li><li>git add/commit/push immediate</li><li>Fill in the below deliverables</li><li>At the end copy the markdown and paste it into milestone4.md</li><li>Add/commit/push the changes to Milestone4</li><li>PR Milestone4 to dev and verify</li><li>PR dev to prod and verify</li><li>Checkout dev locally and pull changes</li><li>Submit the direct link to this new milestone4.md file from your GitHub prod branch to Canvas</li></ol><p>Note: Ensure all images appear properly on GitHub and everywhere else. Images are only accepted from dev or prod, not localhost. All website links must be from prod (you can assume/infer this by getting your dev URL and changing dev to prod).</p></td></tr></table>
 <table><tr><td> <em>Deliverable 1: </em> User can set their profile to public or private </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="http://via.placeholder.com/400x120/009955/fff?text=Complete"></td></tr>
@@ -93,7 +93,7 @@
 <tr><td> <em>Sub-Task 3: </em> Add url to user profile (might want to use a public profile)</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://jal88-prod.herokuapp.com/Project/profile.php?id=1">https://jal88-prod.herokuapp.com/Project/profile.php?id=1</a> </td></tr>
 </table></td></tr>
-<table><tr><td> <em>Deliverable 7: </em> User with the role of admin can edit non-paid out competitions </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="http://via.placeholder.com/400x120/f2c037/000000?text=Partial"></td></tr>
+<table><tr><td> <em>Deliverable 7: </em> User with the role of admin can edit non-paid out competitions </td></tr><tr><td><em>Status: </em> <img width="100" height="20" src="http://via.placeholder.com/400x120/009955/fff?text=Complete"></td></tr>
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Add screenshot showing the list of competitions the admin can view along with the link to edit it</td></tr>
 <tr><td><table><tr><td><img width="768px" src="https://user-images.githubusercontent.com/106134136/183238384-84415e48-3e54-49df-bca8-bf95d866d880.png"/></td></tr>
 <tr><td> <em>Caption:</em> <p>list of all unpaid competitions with the link to view/edit<br></p>
@@ -123,7 +123,8 @@
 <tr><td> <em>Sub-Task 5: </em> Add related pull request(s)</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/jordanNeo/IT202-451/pull/73">https://github.com/jordanNeo/IT202-451/pull/73</a> </td></tr>
 <tr><td> <em>Sub-Task 6: </em> Add link to the admin list page and a link to the edit competition edit page</td></tr>
-<tr><td>Not provided</td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://jal88-dev.herokuapp.com/Project/admin/update_comp.php">https://jal88-dev.herokuapp.com/Project/admin/update_comp.php</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://jal88-dev.herokuapp.com/Project/admin/view_competition.php?id=10">https://jal88-dev.herokuapp.com/Project/admin/view_competition.php?id=10</a> </td></tr>
 <tr><td> <em>Sub-Task 7: </em> Briefly explain the code process/flow</td></tr>
 <tr><td> <em>Response:</em> <p>1.first the view page uses is admin and&nbsp; paid out variable assigned from<br>the paid_out field in the table to decide whether or not to display<br>the form needed to edit the competition.&nbsp;<div>2.If the competition can be edited the<br>form must be filled out with valid values or else a error mesage<br>will be flashed to the user.</div><div>3. On submission a update query runs with<br>parameters set from the form field values.</div><br></p><br></td></tr>
 </table></td></tr>
