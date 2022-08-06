@@ -34,6 +34,7 @@ session_start();
             <li><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
             <li><a href="<?php echo get_url('create_competition.php'); ?>">Create a Battle</a></li>
             <li><a href="<?php echo get_url('list_competitions.php'); ?>">Battle!</a></li>
+            <li><a href="<?php echo get_url('my_competitions.php'); ?>">My Battles</a></li>
         <?php endif; ?>
         <?php if (!is_logged_in()) : ?>
             <li><a href="<?php echo get_url('login.php'); ?>">Login</a></li>
@@ -44,6 +45,7 @@ session_start();
             <li><a href="<?php echo get_url('admin/list_roles.php'); ?>">List Roles</a></li>
             <li><a href="<?php echo get_url('admin/assign_roles.php'); ?>">Assign Roles</a></li>
             <li><a href="<?php echo get_url('admin/admin_calc.php'); ?>">Payout Comps</a></li>
+            <li><a href="<?php echo get_url('admin/update_comp.php'); ?>">Update Comps</a></li>
         <?php endif; ?>
         <?php if (is_logged_in()) : ?>
             <li><a href="<?php echo get_url('logout.php'); ?>">Logout</a></li>

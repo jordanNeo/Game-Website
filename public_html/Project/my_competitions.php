@@ -2,21 +2,21 @@
 require_once(__DIR__ . "/../../partials/nav.php");
 is_logged_in(true);
 $db = getDB();
+//IMPORTANT: this is required for the execute to set the limit variables properly
+//otherwise it'll convert the values to a string and the query will fail since LIMIT expects only numerical values and doesn't cast
+$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+//END IMPORTANT
 //handle join
-if (isset($_POST["join"])) {
-    $user_id = get_user_id();
-    $comp_id = se($_POST, "comp_id", 0, false);
-    $cost = se($_POST, "join_fee", 0, false);
-    $balance = get_credits(get_user_id());
-    join_competition($comp_id, $user_id, $cost);
 
-}
+$per_page = 10;
 $user_id = get_user_id();
-paginate("SELECT count(1) as total FROM Competitions WHERE expires > current_timestamp() AND paid_out < 1 AND did_calc < 1");
+$params = [];
+
+paginate("SELECT count(1) as total FROM User_Competitions WHERE user_id = $user_id");
 //handle page load
 
-    $query = "SELECT Competitions.id, `name`, min_participants, current_participants, current_reward, expires, created_by, min_score, join_fee, IF(competition_id is null, 0, 1) as joined,  CONCAT(first_place_per,'% - ', second_place_per, '% - ', third_place_per, '%') as place FROM Competitions
-    LEFT JOIN (SELECT * FROM User_Competitions WHERE user_id = :uid) as uc ON uc.competition_id = Competitions.id WHERE expires > current_timestamp() AND paid_out < 1 AND did_calc < 1 ORDER BY expires asc";
+$query = "SELECT Competitions.id, `name`, min_participants, current_participants, current_reward, expires, created_by, min_score, join_fee, IF(competition_id is null, 0, 1) as joined, IF(expires > current_timestamp(), 0, 1) as expired, CONCAT(first_place_per,'% - ', second_place_per, '% - ', third_place_per, '%') as place FROM Competitions
+JOIN (SELECT * FROM User_Competitions WHERE user_id = :uid) as uc ON uc.competition_id = Competitions.id ORDER BY expires desc";
     $page = se($_GET, "page", 1, false); //default to page 1 (human readable number)
     $per_page = 10; //how many items to show per page (hint, this could also be something the user can change via a dropdown or similar)
     $offset = ($page - 1) * $per_page;
@@ -25,8 +25,6 @@ paginate("SELECT count(1) as total FROM Competitions WHERE expires > current_tim
     $params[":offset"] = $offset;
     $params[":count"] = $per_page;
 
-
-
     $stmt = $db->prepare($query);
     //we'll want to convert this to use bindValue so ensure they're integers so lets map our array
     foreach ($params as $key => $value) {
@@ -34,7 +32,9 @@ paginate("SELECT count(1) as total FROM Competitions WHERE expires > current_tim
         $stmt->bindValue($key, $value, $type);
     }
     $params = null;
-    $results = [];
+
+
+$results = [];
 try {
     $stmt->execute($params);
     $r = $stmt->fetchAll();
@@ -47,7 +47,7 @@ try {
 }
 ?>
 <div class="container-fluid">
-    <h1>List Competitions</h1>
+    <h1>My Competitions</h1>
     <table class="table">
         <thead>
             <th>Title</th>
@@ -65,17 +65,12 @@ try {
                         <td><?php se($row, "current_participants"); ?>/<?php se($row, "min_participants"); ?></td>
                         <td><?php se($row, "current_reward"); ?><br>Payout: <?php se($row, "place", "-"); ?></td>
                         <td><?php se($row, "min_score"); ?></td>
-                        <td><?php se($row, "expires", "-"); ?></td>
+                        <?php if (se($row, "expired", 0, false)) : ?>
+                            <td>Expired</td>
+                        <?php else : ?>
+                            <td><?php se($row, "expires", "-"); ?></td>
+                        <?php endif; ?>
                         <td>
-                            <?php if (se($row, "joined", 0, false)) : ?>
-                                <button class="btn btn-primary disabled" onclick="event.preventDefault()" disabled>Already Joined</button>
-                            <?php else : ?>
-                                <form method="POST">
-                                    <input type="hidden" name="comp_id" value="<?php se($row, 'id'); ?>" />
-                                    <input type="hidden" name="cost" value="<?php se($row, 'join_fee', 0); ?>" />
-                                    <input type="submit" name="join" class="btn btn-primary" value="Join (Cost: <?php se($row, "join_fee", 0) ?>)" />
-                                </form>
-                            <?php endif; ?>
                             <a class="btn btn-secondary" href="view_competition.php?id=<?php se($row, 'id'); ?>">View</a>
                         </td>
                     </tr>

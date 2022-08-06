@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__ . "/../../partials/nav.php");
+require_once(__DIR__ . "/../../../partials/nav.php");
 is_logged_in(true);
 $db = getDB();
 //handle join
@@ -98,7 +98,7 @@ try {
     $title = $comp . " Top Scores";
     $comp_id = $id;
     $duration = "competition";
-    include(__DIR__ . "/../../partials/scores_table.php");
+    include(__DIR__ . "/../../../partials/scores_table.php");
     ?>
     <?php 
 
@@ -164,5 +164,5 @@ try {
     <?php endif; ?>
 </div>
 <?php
-require(__DIR__ . "/../../partials/flash.php");
+require(__DIR__ . "/../../../partials/flash.php");
 ?>

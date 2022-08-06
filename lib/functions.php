@@ -38,5 +38,8 @@ require(__DIR__ . "/duplicate_user_details.php");
 //reset session
 require(__DIR__ . "/reset_session.php");
 
+//redirect for buffer issues
+require(__DIR__ . "/redirect.php");
+
 require(__DIR__ . "/get_url.php");
 ?>

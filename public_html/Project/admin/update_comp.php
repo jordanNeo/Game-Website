@@ -1,5 +1,9 @@
 <?php
-require_once(__DIR__ . "/../../partials/nav.php");
+require_once(__DIR__ . "/../../../partials/nav.php");
+if (!has_role("Admin")) {
+    flash("You don't have permission to view this page", "warning");
+    redirect(get_url("home.php"));
+}
 is_logged_in(true);
 $db = getDB();
 //handle join
@@ -12,16 +16,15 @@ if (isset($_POST["join"])) {
 
 }
 $user_id = get_user_id();
-paginate("SELECT count(1) as total FROM Competitions WHERE expires > current_timestamp() AND paid_out < 1 AND did_calc < 1");
+paginate("SELECT count(1) as total FROM Competitions WHERE  paid_out < 1");
 //handle page load
 
-    $query = "SELECT Competitions.id, `name`, min_participants, current_participants, current_reward, expires, created_by, min_score, join_fee, IF(competition_id is null, 0, 1) as joined,  CONCAT(first_place_per,'% - ', second_place_per, '% - ', third_place_per, '%') as place FROM Competitions
-    LEFT JOIN (SELECT * FROM User_Competitions WHERE user_id = :uid) as uc ON uc.competition_id = Competitions.id WHERE expires > current_timestamp() AND paid_out < 1 AND did_calc < 1 ORDER BY expires asc";
+    $query = "SELECT id, `name`, min_participants, current_participants, current_reward, expires, created_by, min_score, join_fee, CONCAT(first_place_per,'% - ', second_place_per, '% - ', third_place_per, '%') as place FROM Competitions
+    WHERE paid_out < 1 ORDER BY expires asc";
     $page = se($_GET, "page", 1, false); //default to page 1 (human readable number)
     $per_page = 10; //how many items to show per page (hint, this could also be something the user can change via a dropdown or similar)
     $offset = ($page - 1) * $per_page;
     $query .= " LIMIT :offset, :count";
-    $params[":uid"] = $user_id;
     $params[":offset"] = $offset;
     $params[":count"] = $per_page;
 
@@ -47,7 +50,7 @@ try {
 }
 ?>
 <div class="container-fluid">
-    <h1>List Competitions</h1>
+    <h1>Unpaid Competitions</h1>
     <table class="table">
         <thead>
             <th>Title</th>
@@ -87,8 +90,8 @@ try {
             <?php endif; ?>
         </tbody>
     </table>
-    <?php include(__DIR__ . "/../../partials/pagination.php"); ?>
+    <?php include(__DIR__ . "/../../../partials/pagination.php"); ?>
 </div>
 <?php 
-require(__DIR__."/../../partials/flash.php");
+require(__DIR__."/../../../partials/flash.php");
 ?>
