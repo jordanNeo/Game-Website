@@ -16,7 +16,7 @@ paginate("SELECT count(1) as total FROM User_Competitions WHERE user_id = $user_
 //handle page load
 
 $query = "SELECT Competitions.id, `name`, min_participants, current_participants, current_reward, expires, created_by, min_score, join_fee, IF(competition_id is null, 0, 1) as joined, IF(expires > current_timestamp(), 0, 1) as expired, CONCAT(first_place_per,'% - ', second_place_per, '% - ', third_place_per, '%') as place FROM Competitions
-JOIN (SELECT * FROM User_Competitions WHERE user_id = :uid) as uc ON uc.competition_id = Competitions.id ORDER BY expires asc";
+JOIN (SELECT * FROM User_Competitions WHERE user_id = :uid) as uc ON uc.competition_id = Competitions.id ORDER BY expires desc";
     $page = se($_GET, "page", 1, false); //default to page 1 (human readable number)
     $per_page = 10; //how many items to show per page (hint, this could also be something the user can change via a dropdown or similar)
     $offset = ($page - 1) * $per_page;
