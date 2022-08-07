@@ -31,6 +31,7 @@ function get_top_10($duration = "day")
     }
     //remember to prefix any ambiguous columns (Users and Scores both have created, modified, and id columns)
     error_log("get top 10 query: $query");
+    $query .= " LIMIT 10";
     $stmt = $db->prepare($query);
     $results = [];
     try {
