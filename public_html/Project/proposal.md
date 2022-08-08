@@ -5,6 +5,7 @@
 ## Website Link: https://jal88-dev.herokuapp.com/Project
 ## Your Name: Jordan
 
+## Video Link: https://youtu.be/enI5hK81FYw
 <!-- Line item / Feature template (use this for each bullet point) -- DO NOT DELETE THIS SECTION
 
 
@@ -12,8 +13,6 @@
   -  Link to related .md file: [Link Name](link url)
 
  End Line item / Feature Template -- DO NOT DELETE THIS SECTION --> 
- 
- 
 ### Proposal Checklist and Evidence
 
 https://github.com/jordanNeo/IT202-451/blob/prod/public_html/Project/milestone1.md
@@ -90,6 +89,7 @@ https://github.com/jordanNeo/IT202-451/blob/prod/public_html/Project/milestone4.
   [X] \(8/05/2022) Game should be fully implemented/completed by this point
   -  https://github.com/jordanNeo/IT202-451/blob/prod/public_html/Project/milestone4.md
 
+## Video Link: https://youtu.be/enI5hK81FYw
 ### Intructions
 #### Don't delete this
 1. Pick one project type
